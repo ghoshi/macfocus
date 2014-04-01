@@ -1,0 +1,24 @@
+#!/usr/bin/osascript
+# Short description:
+#   This tiny script pastes the clipboard content to a specified application.
+# Usage:
+#   macpasteto <application_name>
+# Examples:
+#   $ macpasteto chrome
+#   $ macpasteto iTerm
+#   $ macpasteto 'Google Chrome'
+
+# Author: tkykhs
+# Created on: 2014/04/01
+
+on run argv
+  if (count of argv) > 0 then
+    set arg1 to item 1 of argv
+    set focusedApp to path to frontmost application as text
+    tell application arg1
+      activate
+      tell application "System Events" to tell process arg1 to keystroke "v" using command down
+    end tell
+    activate application focusedApp
+  end if
+end run

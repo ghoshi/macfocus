@@ -1,0 +1,19 @@
+#!/usr/bin/osascript
+# Short description:
+#   This very tiny script moves the current window focus to a specified application.
+# Usage:
+#   macfocus <application_name>
+# Examples:
+#   $ macfocus chrome
+#   $ macfocus Emacs
+#   $ macfocus 'Google Chrome'
+
+# Author: tkykhs
+# Created on: 2014/04/01
+
+on run argv
+  if (count of argv) > 0 then
+    set arg1 to item 1 of argv
+    activate application arg1
+  end if
+end run
