@@ -1,0 +1,44 @@
+#!/bin/sh
+# Short description:
+#   Change app/window focus on Mac OS X
+#   It also enables prev/current window switch, back and forth
+# Usage:
+#   macfocus <application_name>
+# Examples:
+#   $ macfocus Emacs
+#   $ macfocus Emacs.app
+#   $ macfocus chrome
+#   $ macfocus 'Google Chrome'
+# Example of prev/current window switches:
+#   $ macfocus Terminal # Assuming the focus is on Chrome
+#   # ⇒ Terminal app becomes active
+#   # Now, if you run the same command again:
+#   $ macfocus Terminal
+#   # ⇒ The focus returns to Chrome browser again
+
+# File to cache previously active app
+MACFOCUS_CACHE="/tmp/.macfocus-$USER"
+
+if [ -z "$1" ]; then
+     >&2 echo "Usage: $0 <application_name>"
+    exit 1
+fi
+
+# App name of the query (=$1) and of the active window
+query_app=$(osascript -e "set who to name of (info for (path to application \"$1\"))")
+if [ -z "$query_app" ]; then
+     >&2 echo "Application name for query \"$1\" could not be found."
+    exit 2
+fi
+
+# App name of the active window
+current_app=$(osascript -e 'set who to name of (info for (path to frontmost application))')
+
+# App who had the previous focus, assuming this script was executed then
+previous_app=$([ -r "$MACFOCUS_CACHE" ] && cat "$MACFOCUS_CACHE")
+
+if [ ! -z "$previous_app" ] && [ "$current_app" = "$query_app" ]; then
+    query_app="$previous_app"
+fi
+echo "$current_app" > "$MACFOCUS_CACHE"
+osascript -e "activate application \"$query_app\""

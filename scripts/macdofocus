@@ -2,11 +2,12 @@
 # Short description:
 #   This very tiny script moves the current window focus to a specified application.
 # Usage:
-#   macfocus <application_name>
+#   macdofocus <application_name>
 # Examples:
-#   $ macfocus chrome
-#   $ macfocus Emacs
-#   $ macfocus 'Google Chrome'
+#   $ macdofocus Emacs
+#   $ macdofocus Emacs.app
+#   $ macdofocus chrome
+#   $ macdofocus 'Google Chrome'
 
 # Author: tkykhs
 # Created on: 2014/04/01
