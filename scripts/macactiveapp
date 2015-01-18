@@ -1,0 +1,3 @@
+#!/bin/sh
+# macactiveapp - outputs the app (window) who has the focus right now
+osascript -e 'set who to name of (info for (path to frontmost application))'
